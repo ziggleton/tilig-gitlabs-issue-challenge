@@ -3,8 +3,8 @@
         <p class="issues-title">{{ state.title }}</p>
         <div class="issue-list-container">
             <IssueListItemComponent
-                v-for="(issue, idx) in state.issueList"
-                :key="idx"
+                v-for="(issue) in state.issueList"
+                :key="issue.id"
                 :issue="issue"
             ></IssueListItemComponent>
         </div>
