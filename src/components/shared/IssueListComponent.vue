@@ -1,20 +1,27 @@
 <template>
     <section class="issue-list">
-        <h4 class="issues-title">{{ state.title }}</h4>
+        <p class="issues-title">{{ state.title }}</p>
+        <div class="issue-list-container">
+            <IssueListItemComponent
+                v-for="(issue, idx) in state.issueList"
+                :key="idx"
+                :issue="issue"
+            ></IssueListItemComponent>
+        </div>
     </section>
 </template>
 
 <script setup>
-import { computed, defineProps, reactive } from 'vue';
-const props = defineProps({
-    title: String,
-    issueList: Array
-})
+import { reactive } from 'vue';
+import IssueListItemComponent from '../../components/shared/issueList/IssueListItemComponent.vue'
 
+const props = defineProps({
+    heading: String,
+    issueListData: Object
+})
 const state = reactive({
-    title: computed(() => {
-        if (!props.title) return 'Default title'
-    })
+    title: props.issueListData?.title,
+    issueList: props.issueListData?.issueList
 })
 
 </script>
@@ -22,5 +29,15 @@ const state = reactive({
 <style lang="scss" scoped>
 .issue-list {
     margin-top: 16px;
+    .issues-title {
+        color: $text-muted;
+        margin-bottom: 1rem;
+        font-weight: 500;
+    }
+    .issue-list-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        grid-gap: 1rem;
+    }
 }
 </style>
